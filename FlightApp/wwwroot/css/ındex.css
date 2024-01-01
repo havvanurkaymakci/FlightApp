@@ -28,6 +28,13 @@ button {
     border-radius: 5px;
 }
 
+.ortala {
+    height: 100vh; /* Ekran yüksekliğini kapla */
+    margin: 0; /* Sayfa kenar boşluğunu sıfırla */
+    display: flex;
+    justify-content: center; /* İçeriği yatayda ortala */
+    align-items: center; /* İçeriği dikeyde ortala */
+}
 .flightform {
     margin: 5px;
     padding: 5px;

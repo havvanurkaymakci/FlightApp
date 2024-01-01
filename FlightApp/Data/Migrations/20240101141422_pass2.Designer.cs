@@ -4,6 +4,7 @@ using FlightApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlightApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240101141422_pass2")]
+    partial class pass2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,7 +55,7 @@ namespace FlightApp.Data.Migrations
 
                     b.HasKey("FlightId");
 
-                    b.ToTable("Flight");
+                    b.ToTable("Flights");
                 });
 
             modelBuilder.Entity("FlightApp.Models.Passenger", b =>
@@ -68,10 +70,6 @@ namespace FlightApp.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PassengerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PassengerSurname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -95,42 +93,6 @@ namespace FlightApp.Data.Migrations
                     b.HasKey("PassengerId");
 
                     b.ToTable("Passenger");
-                });
-
-            modelBuilder.Entity("FlightApp.Models.Payment", b =>
-                {
-                    b.Property<int>("PaymentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"), 1L, 1);
-
-                    b.Property<int>("CVV")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CardDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CardNo")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PassengerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PassengerName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PassengerSurname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TotalAmount")
-                        .HasColumnType("int");
-
-                    b.HasKey("PaymentId");
-
-                    b.HasIndex("PassengerId");
-
-                    b.ToTable("Payment");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -333,15 +295,6 @@ namespace FlightApp.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("FlightApp.Models.Payment", b =>
-                {
-                    b.HasOne("FlightApp.Models.Passenger", "Passenger")
-                        .WithMany()
-                        .HasForeignKey("PassengerId");
-
-                    b.Navigation("Passenger");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

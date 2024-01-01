@@ -1,0 +1,50 @@
+﻿@model IEnumerable<FlightApp.Models.Flight>
+
+<h2>Arama Sonuçları</h2>
+<hr />
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Uçuş Numarası:</th>
+                <th>Nereden:</th>
+                <th>Nereye:</th>
+                <th>Kalkış Tarihi:</th>
+                <th>Varış Tarihi:</th>
+                <th>Bilet Fiyatı:</th>
+                <th>Satın al:</th>
+                <!-- Diğer kolonlar -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var flight in Model)
+            {
+                <tr>
+                    <td>@flight.FlightNumber</td>
+                    <td>@flight.FlightDeparture</td>
+                    <td>@flight.FlightDestination</td>
+                    <td>@flight.FlightDepartureDate.ToString("dd/MM/yyyy")</td>
+                    <td>@flight.FlightDestinationDate.ToString("dd/MM/yyyy")</td>
+                    <td>@flight.FlightPrice</td>
+                    <td>
+                        <a href="@Url.Action("Create", "Passenger", new { flightId = flight.FlightId })">
+                            <button class="btn btn-primary">Bilet Al</button>
+
+                            @* <div class="box">
+                                <a asp-controller="Passenger" asp-action="Create">Bilet al</a>
+                            </div> *@
+
+                        </a>
+                    </td>
+                    <!-- Diğer kolonlar -->
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Uçuş bulunamadı.</p>
+}

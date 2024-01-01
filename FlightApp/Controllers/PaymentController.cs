@@ -10,88 +10,93 @@ using FlightApp.Models;
 
 namespace FlightApp.Controllers
 {
-    public class FlightController : Controller
+    public class PaymentController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public FlightController(ApplicationDbContext context)
+        public PaymentController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Flight
+        // GET: Payment
         public async Task<IActionResult> Index()
         {
-              return _context.Flights != null ? 
-                          View(await _context.Flights.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Flights'  is null.");
+              return _context.Payment != null ? 
+                          View(await _context.Payment.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.Payment'  is null.");
         }
 
-        // GET: Flight/Details/5
+        // GET: Payment/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Flights == null)
+            if (id == null || _context.Payment == null)
             {
                 return NotFound();
             }
 
-            var flight = await _context.Flights
-                .FirstOrDefaultAsync(m => m.FlightId == id);
-            if (flight == null)
+            var payment = await _context.Payment
+                .FirstOrDefaultAsync(m => m.PaymentId == id);
+            if (payment == null)
             {
                 return NotFound();
             }
 
-            return View(flight);
+            return View(payment);
         }
 
-        // GET: Flight/Create
+        // GET: Payment/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Flight/Create
+        // POST: Payment/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FlightId,FlightNumber,FlightDeparture,FlightDestination,FlightDepartureDate,FlightDestinationDate,FlightPrice")] Flight flight,Payment payment)
+        public async Task<IActionResult> Create([Bind("PaymentId,TotalAmount,CardNo,CardDate,CVV,PassengerName,PassengerSurname")] Payment payment, Passenger passenger, Flight flight)
         {
+            payment.PassengerName = passenger.PassengerName;
+            payment.PassengerSurname = passenger.PassengerSurname;
+            payment.TotalAmount = (int)flight.FlightPrice;
+
             if (ModelState.IsValid)
             {
-                _context.Add(flight);
+                _context.Add(payment);
                 await _context.SaveChangesAsync();
-                TempData["FlightInfo"] = payment;
                 return RedirectToAction(nameof(Index));
             }
-            return View(flight);
+
+            return View(payment);
         }
 
-        // GET: Flight/Edit/5
+
+        // GET: Payment/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Flights == null)
+            if (id == null || _context.Payment == null)
             {
                 return NotFound();
             }
 
-            var flight = await _context.Flights.FindAsync(id);
-            if (flight == null)
+            var payment = await _context.Payment.FindAsync(id);
+            if (payment == null)
             {
                 return NotFound();
             }
-            return View(flight);
+            return View(payment);
         }
 
-        // POST: Flight/Edit/5
+        // POST: Payment/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FlightId,FlightNumber,FlightDeparture,FlightDestination,FlightDepartureDate,FlightDestinationDate,FlightPrice")] Flight flight)
+        public async Task<IActionResult> Edit(int id, [Bind("PaymentId,TotalAmount,CardNo,CardDate,CVV,PassengerName,PassengerSurname")] Payment payment)
         {
-            if (id != flight.FlightId)
+            if (id != payment.PaymentId)
             {
                 return NotFound();
             }
@@ -100,12 +105,12 @@ namespace FlightApp.Controllers
             {
                 try
                 {
-                    _context.Update(flight);
+                    _context.Update(payment);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FlightExists(flight.FlightId))
+                    if (!PaymentExists(payment.PaymentId))
                     {
                         return NotFound();
                     }
@@ -116,49 +121,49 @@ namespace FlightApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(flight);
+            return View(payment);
         }
 
-        // GET: Flight/Delete/5
+        // GET: Payment/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Flights == null)
+            if (id == null || _context.Payment == null)
             {
                 return NotFound();
             }
 
-            var flight = await _context.Flights
-                .FirstOrDefaultAsync(m => m.FlightId == id);
-            if (flight == null)
+            var payment = await _context.Payment
+                .FirstOrDefaultAsync(m => m.PaymentId == id);
+            if (payment == null)
             {
                 return NotFound();
             }
 
-            return View(flight);
+            return View(payment);
         }
 
-        // POST: Flight/Delete/5
+        // POST: Payment/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Flights == null)
+            if (_context.Payment == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Flights'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Payment'  is null.");
             }
-            var flight = await _context.Flights.FindAsync(id);
-            if (flight != null)
+            var payment = await _context.Payment.FindAsync(id);
+            if (payment != null)
             {
-                _context.Flights.Remove(flight);
+                _context.Payment.Remove(payment);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FlightExists(int id)
+        private bool PaymentExists(int id)
         {
-          return (_context.Flights?.Any(e => e.FlightId == id)).GetValueOrDefault();
+          return (_context.Payment?.Any(e => e.PaymentId == id)).GetValueOrDefault();
         }
     }
 }

@@ -1,0 +1,67 @@
+﻿@model FlightApp.Models.Payment
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h4>Ödeme </h4>
+<hr />
+
+<div>
+        <p><strong> uçuş numarası :</strong> @Model.TotalAmount</p>
+    <p><strong>Yolcunun adı :</strong> @Model.PassengerName</p>
+    <p><strong>Yolcunun soyadı :</strong> @Model.PassengerSurname</p>
+
+    <!-- Diğer bilgileri ekleyebilirsiniz -->
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+         
+            <div class="form-group">
+                <label asp-for="CardNo" class="control-label"></label>
+                <input asp-for="CardNo" class="form-control" />
+                <span asp-validation-for="CardNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CardDate" class="control-label"></label>
+                <input asp-for="CardDate" class="form-control" />
+                <span asp-validation-for="CardDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CVV" class="control-label"></label>
+                <input asp-for="CVV" class="form-control" />
+                <span asp-validation-for="CVV" class="text-danger"></span>
+            </div>
+         
+         
+            <div class="form-group">
+                <input type="submit" value="Ödemeyi tamamla" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@* <hr />
+<br />
+<div>
+    <table>
+        <tr>
+            <td>
+                <input type="hidden" name="flightId" value="@ViewData["flightId"]" />
+
+                <input type="submit" value="yolcu bilgilerini kaydet" class="btn btn-primary" />
+                <a asp-action="Create" asp-controller="Payment" class="btn btn-secondary">Ödeme işlemine geç</a>
+            </td>
+        </tr>
+
+
+    </table>
+ *@</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
