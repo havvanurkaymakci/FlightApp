@@ -4,6 +4,7 @@ using FlightApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlightApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240101181901_pay")]
+    partial class pay
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,7 +116,21 @@ namespace FlightApp.Data.Migrations
                     b.Property<int>("CardNo")
                         .HasColumnType("int");
 
+                    b.Property<double>("FlightPrice")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("PassengerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PassengerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PassengerSurname")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("PaymentId");
+
+                    b.HasIndex("PassengerId");
 
                     b.ToTable("Payment");
                 });
@@ -319,6 +335,15 @@ namespace FlightApp.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("FlightApp.Models.Payment", b =>
+                {
+                    b.HasOne("FlightApp.Models.Passenger", "Passenger")
+                        .WithMany()
+                        .HasForeignKey("PassengerId");
+
+                    b.Navigation("Passenger");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

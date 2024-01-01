@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FlightApp.Models
 {
@@ -8,11 +7,7 @@ namespace FlightApp.Models
         [Key]
         public int PaymentId { get; set; }
 
-        //[ForeignKey("FlightId")]
-        //Flight flight { get; set; }
-        //public string flightNumber {  get; set; }   
 
-        public int TotalAmount { get; set; }
         public int CardNo { get; set; }
 
 
@@ -21,14 +16,6 @@ namespace FlightApp.Models
         public DateTime CardDate { get; set; }
         public int CVV { get; set; }
 
-        [ForeignKey("PassengerId")]
-        public Passenger? Passenger { get; set; }
-        public string? PassengerName { get; set; }
-        public string? PassengerSurname { get; set; }
-
-
-
 
     }
 }
-

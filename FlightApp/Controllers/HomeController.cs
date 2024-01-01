@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Configuration;
 using System.Linq;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json.Linq;
 
 namespace FlightApp.Controllers
 {
@@ -36,21 +38,24 @@ namespace FlightApp.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
         [HttpGet]
         public IActionResult UcusSorgusu(string Departure, string Destination, DateTime? departuredate)
         {
             var sonuc1 = _context.Flights
-    .Where(x =>
-        EF.Functions.Like(x.FlightDeparture, Departure) &&
-        EF.Functions.Like(x.FlightDestination, Destination) &&
-        (!departuredate.HasValue || x.FlightDepartureDate.Date == departuredate.Value.Date))
-    .ToList();
-
-          
-
+           .Where(x =>
+            EF.Functions.Like(x.FlightDeparture, Departure) &&
+            EF.Functions.Like(x.FlightDestination, Destination) &&
+            (!departuredate.HasValue || x.FlightDepartureDate.Date == departuredate.Value.Date))
+            .ToList();      
 
             return View("Sonuc", sonuc1);
         }
 
+
+        public IActionResult Onay()
+        {
+            return View(); 
+        }
     }
 }

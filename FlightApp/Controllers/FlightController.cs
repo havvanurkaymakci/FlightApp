@@ -56,13 +56,13 @@ namespace FlightApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FlightId,FlightNumber,FlightDeparture,FlightDestination,FlightDepartureDate,FlightDestinationDate,FlightPrice")] Flight flight,Payment payment)
+        public async Task<IActionResult> Create([Bind("FlightId,FlightNumber,FlightDeparture,FlightDestination,FlightDepartureDate,FlightDestinationDate,FlightPrice")] Flight flight)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(flight);
                 await _context.SaveChangesAsync();
-                TempData["FlightInfo"] = payment;
+               
                 return RedirectToAction(nameof(Index));
             }
             return View(flight);

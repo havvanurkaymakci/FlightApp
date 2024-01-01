@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FlightApp.Data;
 using FlightApp.Models;
+using FlightApp.Data.Migrations;
 
 namespace FlightApp.Controllers
 {
@@ -22,20 +23,20 @@ namespace FlightApp.Controllers
         // GET: Passenger
         public async Task<IActionResult> Index()
         {
-              return _context.Passenger != null ? 
-                          View(await _context.Passenger.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Passenger'  is null.");
+              return _context.Passengers != null ? 
+                          View(await _context.Passengers.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.Passengers'  is null.");
         }
 
         // GET: Passenger/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Passenger == null)
+            if (id == null || _context.Passengers == null)
             {
                 return NotFound();
             }
 
-            var passenger = await _context.Passenger
+            var passenger = await _context.Passengers
                 .FirstOrDefaultAsync(m => m.PassengerId == id);
             if (passenger == null)
             {
@@ -56,17 +57,15 @@ namespace FlightApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PassengerId,PassengerName,PassengerSurname,Birthday,passengerGender,TCNumber,UserMail,UserPhone")] Passenger passenger, int flightId)
+        public async Task<IActionResult> Create(int flightId,[Bind("PassengerId,PassengerName,PassengerSurname,Birthday,passengerGender,TCNumber,UserMail,UserPhone")] Passenger passenger)
         {
             if (ModelState.IsValid)
             {
-              
                 _context.Add(passenger);
                 await _context.SaveChangesAsync();
-                TempData["PassengerInfo"] = passenger;
-
+            
+               
                 return RedirectToAction("Create", "Payment");
-                //return RedirectToAction(nameof(Index));
             }
             return View(passenger);
         }
@@ -74,12 +73,12 @@ namespace FlightApp.Controllers
         // GET: Passenger/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Passenger == null)
+            if (id == null || _context.Passengers == null)
             {
                 return NotFound();
             }
 
-            var passenger = await _context.Passenger.FindAsync(id);
+            var passenger = await _context.Passengers.FindAsync(id);
             if (passenger == null)
             {
                 return NotFound();
@@ -125,12 +124,12 @@ namespace FlightApp.Controllers
         // GET: Passenger/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Passenger == null)
+            if (id == null || _context.Passengers == null)
             {
                 return NotFound();
             }
 
-            var passenger = await _context.Passenger
+            var passenger = await _context.Passengers
                 .FirstOrDefaultAsync(m => m.PassengerId == id);
             if (passenger == null)
             {
@@ -145,14 +144,14 @@ namespace FlightApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Passenger == null)
+            if (_context.Passengers == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Passenger'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Passengers'  is null.");
             }
-            var passenger = await _context.Passenger.FindAsync(id);
+            var passenger = await _context.Passengers.FindAsync(id);
             if (passenger != null)
             {
-                _context.Passenger.Remove(passenger);
+                _context.Passengers.Remove(passenger);
             }
             
             await _context.SaveChangesAsync();
@@ -161,7 +160,7 @@ namespace FlightApp.Controllers
 
         private bool PassengerExists(int id)
         {
-          return (_context.Passenger?.Any(e => e.PassengerId == id)).GetValueOrDefault();
+          return (_context.Passengers?.Any(e => e.PassengerId == id)).GetValueOrDefault();
         }
     }
 }

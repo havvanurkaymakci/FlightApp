@@ -4,12 +4,13 @@ namespace FlightApp.Models
 {
     public class Passenger
     {
+
         [Key]
 
         public int PassengerId { get; set; }
 
 
-        [Display(Name = "İsim ")]
+        [Display(Name = "İsim")]
         [Required(ErrorMessage = "Kullanıcı adı alanı zorunludur.")]
         public string? PassengerName { get; set; }
 
@@ -24,6 +25,7 @@ namespace FlightApp.Models
 
         [Display(Name = "Cinsiyet")]
         [Required(ErrorMessage = "Lütfen cinsiyet seçiniz")]
+
         public string passengerGender { get; set; }
 
 
@@ -42,5 +44,7 @@ namespace FlightApp.Models
         [Phone(ErrorMessage = "Lütfen geçerli bir telefon numarası giriniz")]
         [Required(ErrorMessage = "Telefon numarası alanı zorunludur.")]
         public string UserPhone { get; set; }
+
+        //public ICollection<Payment> Payments { get; set; }
     }
 }

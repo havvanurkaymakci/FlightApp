@@ -22,20 +22,20 @@ namespace FlightApp.Controllers
         // GET: Payment
         public async Task<IActionResult> Index()
         {
-              return _context.Payment != null ? 
-                          View(await _context.Payment.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Payment'  is null.");
+              return _context.Payments != null ? 
+                          View(await _context.Payments.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.Payments'  is null.");
         }
 
         // GET: Payment/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Payment == null)
+            if (id == null || _context.Payments == null)
             {
                 return NotFound();
             }
 
-            var payment = await _context.Payment
+            var payment = await _context.Payments
                 .FirstOrDefaultAsync(m => m.PaymentId == id);
             if (payment == null)
             {
@@ -56,32 +56,26 @@ namespace FlightApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PaymentId,TotalAmount,CardNo,CardDate,CVV,PassengerName,PassengerSurname")] Payment payment, Passenger passenger, Flight flight)
+        public async Task<IActionResult> Create([Bind("PaymentId,CardNo,CardDate,CVV")] Payment payment)
         {
-            payment.PassengerName = passenger.PassengerName;
-            payment.PassengerSurname = passenger.PassengerSurname;
-            payment.TotalAmount = (int)flight.FlightPrice;
-
             if (ModelState.IsValid)
             {
                 _context.Add(payment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Onay", "Home");
             }
-
             return View(payment);
         }
-
 
         // GET: Payment/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Payment == null)
+            if (id == null || _context.Payments == null)
             {
                 return NotFound();
             }
 
-            var payment = await _context.Payment.FindAsync(id);
+            var payment = await _context.Payments.FindAsync(id);
             if (payment == null)
             {
                 return NotFound();
@@ -94,7 +88,7 @@ namespace FlightApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PaymentId,TotalAmount,CardNo,CardDate,CVV,PassengerName,PassengerSurname")] Payment payment)
+        public async Task<IActionResult> Edit(int id, [Bind("PaymentId,CardNo,CardDate,CVV")] Payment payment)
         {
             if (id != payment.PaymentId)
             {
@@ -127,12 +121,12 @@ namespace FlightApp.Controllers
         // GET: Payment/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Payment == null)
+            if (id == null || _context.Payments == null)
             {
                 return NotFound();
             }
 
-            var payment = await _context.Payment
+            var payment = await _context.Payments
                 .FirstOrDefaultAsync(m => m.PaymentId == id);
             if (payment == null)
             {
@@ -147,14 +141,14 @@ namespace FlightApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Payment == null)
+            if (_context.Payments == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Payment'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Payments'  is null.");
             }
-            var payment = await _context.Payment.FindAsync(id);
+            var payment = await _context.Payments.FindAsync(id);
             if (payment != null)
             {
-                _context.Payment.Remove(payment);
+                _context.Payments.Remove(payment);
             }
             
             await _context.SaveChangesAsync();
@@ -163,7 +157,7 @@ namespace FlightApp.Controllers
 
         private bool PaymentExists(int id)
         {
-          return (_context.Payment?.Any(e => e.PaymentId == id)).GetValueOrDefault();
+          return (_context.Payments?.Any(e => e.PaymentId == id)).GetValueOrDefault();
         }
     }
 }

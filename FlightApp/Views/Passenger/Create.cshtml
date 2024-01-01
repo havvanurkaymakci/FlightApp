@@ -4,13 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-
-<script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-
-
-<h4>Yolcu Bilgilerini Giriniz</h4>
+<h4>Yolcu bilgileri</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -31,6 +25,7 @@
                 <input asp-for="Birthday" class="form-control" />
                 <span asp-validation-for="Birthday" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <label>
                     <input type="radio" asp-for="passengerGender" name="passengerGender" value="erkek"> Erkek
@@ -55,26 +50,16 @@
                 <input asp-for="UserPhone" class="form-control" />
                 <span asp-validation-for="UserPhone" class="text-danger"></span>
             </div>
-            <hr />
             <br />
-            <div>
-                <table>
-                    <tr>
-                        <td>
-                            <input type="hidden" name="flightId" value="@ViewData["flightId"]" />
+            <div class="form-group">
+                <input type="submit" value="Ödemeye geç" class="btn btn-primary" />
 
-                            <input type="submit" value="yolcu bilgilerini kaydet" class="btn btn-primary" />
-                            <a asp-action="Create" asp-controller="Payment" class="btn btn-secondary">Ödeme işlemine geç</a>
-                        </td>
-                    </tr>
-
-
-                </table>
             </div>
+           
         </form>
     </div>
 </div>
-<h5 style="color:blue;">@TempData["onayMesaji"]</h5>
+
 
 
 @section Scripts {
