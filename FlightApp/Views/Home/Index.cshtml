@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<body class="page">
+    <section class="banner" id="top">
+        <div class="container">
+            <div class="row">
+                <div classs="flightform">
+                    <div class="styled-text">
+                        <h4 > Uçak bileti ara</h4>
+                    </div>
+                    
+                    <hr />
+                    <form id="form-submit" action="@Url.Action("UcusSorgusu", "Home")" , method="get">
+                        <div class="container2">
+                            <div class="row">
+                                <div class="col-md-3 form-group">
+                                    <fieldset>
+                                        <label for="Departure" class="control-label">   Nereden:</label>
+                                        <input name="Departure" id="Departure" class="form-control" />
+                                    </fieldset>
+                                </div>
+
+                                <div class="col-md-3 form-group">
+                                    <fieldset>
+                                        <label for="Destination" class="control-label">   Nereye:</label>
+                                        <input name="Destination" class="form-control" />
+                                    </fieldset>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <fieldset>
+                                        <label for="departuredate">Kalkış tarihi:</label>
+                                        <input name="departuredate" type="text" class="form-control date" id="deparuredate" placeholder="Select date..." required="" onchange='this.form.()'>
+                                    </fieldset>
+                                </div>
+
+                                <div class="col-md-3 form-group">
+                                    <fieldset>
+                                        @*    <a asp-action="Index"> *@
+                                        <button class="aramabutonu" type="submit" id="form-submit">Bilet bul</button>
+                                    </fieldset>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+<br />
+<hr />
+<br />
+
+
+<div>
+        <div class="imagee-container">
+            <img class="image" src="img/kapadokya.jpg" alt="Resim 1">
+            <img class="image" src="img/newyork.jpg" alt="Resim 2">
+            <img class="image" src="img/Hallstatt.jpg" alt="Resim 3">
+        </div>
+        <div class="imagee-container">
+            <img class="image" src="img/bogazici.jpg" alt="Resim 4">
+            <img class="image" src="img/Aurora2.jpg" alt="Resim 5">
+            <img class="image" src="img/iran.jpeg" alt="Resim 6">
+        </div>
+</div>
+   
+    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+
+
+    <div class="bosluk"></div>
+</body>

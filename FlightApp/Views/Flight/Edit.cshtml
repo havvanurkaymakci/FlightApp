@@ -1,0 +1,67 @@
+﻿@model FlightApp.Models.Flight
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Uçuş bilgilerini düzenle</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FlightId" />
+            <div class="form-group">
+                <label asp-for="FlightNumber" class="control-label"></label>
+                <input asp-for="FlightNumber" class="form-control" />
+                <span asp-validation-for="FlightNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FlightDeparture" class="control-label"></label>
+                <input asp-for="FlightDeparture" class="form-control" />
+                <span asp-validation-for="FlightDeparture" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FlightDestination" class="control-label"></label>
+                <input asp-for="FlightDestination" class="form-control" />
+                <span asp-validation-for="FlightDestination" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FlightDepartureDate" class="control-label"></label>
+                <input asp-for="FlightDepartureDate" class="form-control" />
+                <span asp-validation-for="FlightDepartureDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FlightDestinationDate" class="control-label"></label>
+                <input asp-for="FlightDestinationDate" class="form-control" />
+                <span asp-validation-for="FlightDestinationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FlightPrice" class="control-label"></label>
+                <input asp-for="FlightPrice" class="form-control" />
+                <span asp-validation-for="FlightPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                                <input type="submit" value="kaydet" class="btn btn-primary" />
+                                <a asp-action="Index" class="btn btn-secondary">Uçuşları görüntüle</a>
+                            </td>
+                        </tr>
+
+
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

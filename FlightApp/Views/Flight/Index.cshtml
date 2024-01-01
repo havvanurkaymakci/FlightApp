@@ -1,0 +1,73 @@
+﻿@model IEnumerable<FlightApp.Models.Flight>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Mevcut Uçuşlar</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FlightNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlightDeparture)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlightDestination)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlightDepartureDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlightDestinationDate)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.FlightPrice)
+            </th>
+            <th>
+                <a asp-action="Create" class="btn btn-sm btn-primary">
+                    <i class="fa-solid fa-plus"></i> Yeni oluştur
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlightNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlightDeparture)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlightDestination)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlightDepartureDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlightDestinationDate)
+            </td>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.FlightPrice)
+            </td>
+          
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.FlightId" class="btn btn-sm btn-success">
+                        Düzenle                     
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.FlightId" class="btn btn-sm btn-warning">  Sil </a>
+                    <a asp-action="Details" asp-route-id="@item.FlightId" class="btn btn-sm btn-info"> Görüntüle</a>
+
+                </td>
+        </tr>
+}
+    </tbody>
+</table>
